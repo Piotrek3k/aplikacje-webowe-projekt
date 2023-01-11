@@ -1,11 +1,11 @@
 from django.urls import path, include
-from bookweb_app.api.views import book_list, book_info, author_info, author_list, review_info, review_list
+from bookweb_app.api.views import ReviewList,ReviewInfo,AuthorList,AuthorInfo,BookList,BookInfo
 
 urlpatterns = [
-    path('booklist/',book_list, name='book-list'),
-    path('books/<int:pk>', book_info, name='book-info'),
-    path('authorlist/',author_list, name='author-list'),
-    path('authors/<int:pk>', author_info, name='author-info'),
-    path('reviewlist/',review_list, name='review-list'),
-    path('review/<int:pk>',review_info, name='review-info'),
+    path('booklist/',BookList.as_view(), name='book-list'),
+    path('books/<int:pk>', BookInfo.as_view(), name='book-info'),
+    path('authorlist/',AuthorList.as_view(), name='author-list'),
+    path('authors/<int:pk>', AuthorInfo.as_view(), name='author-info'),
+    path('authors/<int:pk>/review',ReviewList.as_view(), name='review-list'),
+    path('authors/review/<int:pk>',ReviewInfo.as_view(), name='review-info'),
 ]
