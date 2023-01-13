@@ -19,7 +19,7 @@ class AuthorSerializer(serializers.HyperlinkedModelSerializer):
 
 class ReviewSerializer(serializers.ModelSerializer):
     # book = BookSerializer(many=True,read_only=True)
-    
+    review_creator=serializers.StringRelatedField(read_only=True)
     class Meta:
         model = Review
         fields = "__all__"

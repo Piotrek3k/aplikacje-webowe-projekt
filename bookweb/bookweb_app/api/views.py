@@ -3,6 +3,7 @@ from bookweb_app.api.serializers import BookSerializer, AuthorSerializer, Review
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import generics
+from rest_framework.exceptions import ValidationError
 
 class ReviewList(generics.ListCreateAPIView):
     def get_queryset(self):
@@ -13,6 +14,24 @@ class ReviewList(generics.ListCreateAPIView):
 class ReviewInfo(generics.RetrieveUpdateDestroyAPIView):
     queryset=Review.objects.all()
     serializer_class = ReviewSerializer
+
+class ReviewCreate(generics.CreateAPIView):
+    serializer_class = ReviewSerializer
+    
+    def get_queryset(self):
+        return Review.objects.all()
+    
+    def perform_create(self, serializer):
+        id = self.kwargs['pk']
+        book=book.objects.get(pk=id)
+        review_creator=self.request.user
+        filtered_review = Review.objects.filter(review_creator=review_creator,book=book)
+        if(filtered_review.exists()):
+            # raise serializers.ValidationError("Review already exists")
+            raise ValidationError('You have already reviewed this book')
+        
+        
+        serializer.save(review_creator=review_creator, book=book)
     
 class AuthorList(generics.ListCreateAPIView):
     queryset = Author.objects.all()
