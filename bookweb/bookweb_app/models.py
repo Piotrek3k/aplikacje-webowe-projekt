@@ -16,6 +16,8 @@ class Book(models.Model):
     createdAt=models.DateTimeField(auto_now_add=True) 
     year=models.IntegerField()
     author = models.ForeignKey(Author,on_delete=models.CASCADE, related_name="book")
+    no_ratings = models.IntegerField(default=0)
+    avg = models.FloatField(default=0)
     
     def __str__(self):
         return self.title
@@ -27,6 +29,6 @@ class Review(models.Model):
     updatedAt=models.DateTimeField(auto_now=True)
     active=models.BooleanField(default=True)
     book=models.ForeignKey(Book,on_delete=models.CASCADE,related_name="review")
-    review_creator = models.ForeignKey(User,on_delete=models.CASCADE)
+    review_creator = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     def __str__(self):
         return self.book.title

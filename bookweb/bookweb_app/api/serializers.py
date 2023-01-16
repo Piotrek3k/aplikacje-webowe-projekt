@@ -25,26 +25,8 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = "__all__"
 class BookSerializer(serializers.ModelSerializer):
     review = ReviewSerializer(many=True, read_only=True)
+    #author = serializers.CharField(source=('author.firstName'+' '+'author.lastName'))
+    author = serializers.CharField(source=('author.__str__'))
     class Meta:
         model = Book
         fields = "__all__"
-# """ def name_length_validator(val):
-#     if(len(val))<2:
-#         raise serializers.ValueError("Name must be at least 2 characters long")
-#     elif(len(val))>50:
-#         raise serializers.ValueError("Name is too long")
-# class BookSerializer(serializers.Serializer):
-#     id = serializers.IntegerField(read_only=True)
-#     name = serializers.CharField(validators=[name_length_validator])
-#     desc = serializers.CharField()
-#     active = serializers.BooleanField()
-    
-#     def create(self,validated_data):
-#         return Book.objects.create(**validated_data)
-    
-#     def update(self,instance,validated_data):
-#         instance.name = validated_data.get('name',instance.name)
-#         instance.desc = validated_data.get('desc',instance.desc)
-#         instance.active = validated_data.get('active',instance.active)
-#         instance.save()
-#         return instance  """
