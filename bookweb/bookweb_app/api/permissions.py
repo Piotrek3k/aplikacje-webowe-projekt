@@ -16,7 +16,7 @@ class UserReviewPerm(permissions.BasePermission):
             return True
         else:
         # Check permissions for write request
-            print(obj)
-            print(obj.review_creator)
-            print(request.user)
+            # print(obj)
+            # print(obj.review_creator)
+            # print(request.user)
             return obj.review_creator == request.user or request.user.is_staff
